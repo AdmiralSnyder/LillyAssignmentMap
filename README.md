@@ -1,2 +1,2 @@
 # LillyAssignmentMap
-map displaying for AlphaLilly
+map displaying for Alphalilly
