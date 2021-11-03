@@ -1,18 +1,17 @@
-﻿
-using LillyAssignmentMap;
-using System.Diagnostics;
+﻿using LillyAssignmentMap;
+
 
 var mapman = new MapMan();
 
-// See https://aka.ms/new-console-template for more information
-int zoomLevel = 1;
-mapman.DisplayMap(zoomLevel);
+mapman.DisplayMap();
+
+Console.WriteLine("Welcome to the map view - you can zoom using the scrollwheel.");
+Console.WriteLine("If you hold [Shift] while scrolling, the map is panned up and down.");
 
 #region attach mouse wheel
 
+// Enable mouse support for the console
 var hnd = Interop.GetStdHandle(StdHandles.STD_INPUT_HANDLE);
-INPUT_RECORD[] buf = new INPUT_RECORD[1];
-
 
 Interop.GetConsoleMode(hnd, out var mode);
 mode &= ~ConsoleModes.ENABLE_QUICK_EDIT_MODE; //disable
@@ -22,12 +21,15 @@ Interop.SetConsoleMode(hnd, mode);
 
 //bool x = Interop.SetConsoleMode(inHandle, ConsoleModes.ENABLE_EXTENDED_FLAGS | ConsoleModes.ENABLE_WINDOW_INPUT | ConsoleModes.ENABLE_MOUSE_INPUT);
 
-
+// this defines at what level the map is zoomed.
+int zoomLevel = 1;
+// this defines where the console is scrolled to.
 int pos = 0;
+INPUT_RECORD[] buf = new INPUT_RECORD[1];
 
 while (true)
 {
-    if (Interop.ReadConsoleInput(hnd, buf, (uint)buf.Length, out var num) /*&& num == 1*/)
+    if (Interop.ReadConsoleInput(hnd, buf, (uint)buf.Length, out var num) && num == 1)
     {
         if (buf[0].EventType == INPUT_RECORD_EventTypes.MOUSE_EVENT && buf[0].MouseEvent.dwEventFlags == MouseEventFlags.MOUSE_WHEELED)
         {
@@ -44,7 +46,7 @@ while (true)
             }
             else
             {
-                zoomLevel += (up ? -1 : 1) * 1;
+                zoomLevel += (up ? 1 : -1) * 1;
                 if (zoomLevel < 0)
                 {
                     zoomLevel = 0;
@@ -55,12 +57,5 @@ while (true)
         }
     }
 }
+
 #endregion
-
-
-
-
-
-
-
-

@@ -2,6 +2,8 @@
 
 namespace LillyAssignmentMap;
 
+// This file contains LOTS of declarations for the mouse wheel attachment, basically.
+
 internal static class Interop
 {
 

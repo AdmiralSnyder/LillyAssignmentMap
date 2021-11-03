@@ -25,7 +25,11 @@ internal class MapMan
 
     #region Map Drawing
 
-    public static void DrawItem(char item)
+    /// <summary>
+    /// Colored output for the individual pieces
+    /// </summary>
+    /// <param name="item"></param>
+    public static void DrawMapItem(char item)
     {
         switch (item)
         {
@@ -48,14 +52,20 @@ internal class MapMan
         }
     }
 
+    /// <summary>
+    /// Display the map
+    /// </summary>
     public void DisplayMap() => DisplayMap(1);
 
+    /// <summary>
+    /// Display a scaled version of the map
+    /// </summary>
+    /// <param name="scale"></param>
     public void DisplayMap(int scale)
     {
-
-
         int cx = map.GetLength(1);
         int cy = map.GetLength(0);
+
         DrawHorzBorder();
         for (int x = 0; x < cx; x++)
         {
@@ -66,6 +76,7 @@ internal class MapMan
             }
         }
         DrawHorzBorder();
+
 
         void DrawHorzBorder()
         {
@@ -88,7 +99,7 @@ internal class MapMan
             {
                 for (int s = 0; s < scale; s++)
                 {
-                    DrawItem(map[y, x]);
+                    DrawMapItem(map[y, x]);
                 }
             }
             Console.Write('|');
